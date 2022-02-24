@@ -1,12 +1,13 @@
 package com.jcallinan.kotlingeoquiz
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-
+const val EXTRA_ANSWER_SHOWN = "com.jcallinan.kotlinggeoquiz.answer_shown"
 private const val EXTRA_ANSWER_IS_TRUE =
     "com.jcallinan.kotlingeoquiz.answer_is_true"
 
@@ -30,7 +31,14 @@ class CheatActivity : AppCompatActivity() {
                 else -> R.string.false_button
             }
             answerTextView.setText(answerText)
+            setAnswerShownResult(true)
         }
+    }
+    private fun setAnswerShownResult(isAnswerShown: Boolean) {
+        val data = Intent().apply {
+            putExtra(EXTRA_ANSWER_SHOWN,isAnswerShown)
+        }
+        setResult(Activity.RESULT_OK, data)
     }
     companion object {
         fun newIntent(packageContext: Context, answerIsTrue: Boolean): Intent {
